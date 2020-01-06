@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { EXECUTE_ACTION } from '@nostack/no-stack';
 import compose from '@shopify/react-compose';
 import { graphql } from '@apollo/react-hoc';
-import {Swipe, Position} from "react-swipe-component";
 
 import {
   UPDATE_PROJECT_FOR_PROJECTS_FOR_USER_ACTION_ID,
