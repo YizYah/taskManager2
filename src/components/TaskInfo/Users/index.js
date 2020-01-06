@@ -4,9 +4,16 @@ import styled from 'styled-components';
 import UserCreationForm from '../UserCreationForm';
 import User from '../User';
 
-const UsersStyleWrapper = styled.div``;
+const UsersStyleWrapper = styled.div`
+  display: flex;
+  align-items: center;
 
-function Users({ users, stepId, refetchQueries }) {
+  @media only screen and (max-width: 500px){
+    display: block;
+  }
+`;
+
+function Users({ users, team, stepId, refetchQueries }) {
   return (
     <UsersStyleWrapper>
       <UserCreationForm
@@ -17,6 +24,7 @@ function Users({ users, stepId, refetchQueries }) {
       {users.map(user => (
         <User
           key={user.id}
+          team={team}
           user={user}
           parentId={stepId}
           refetchQueries={refetchQueries}

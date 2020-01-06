@@ -9,42 +9,116 @@ import {
   DELETE_TASK_FOR_TASK_INFO_ACTION_ID, TYPE_COMPLETED_ID, TYPE_STEP_ID,
 } from '../../../config';
 
-import EditInstanceForm from '../../EditInstanceForm';
-import DeleteInstanceMenu from '../../DeleteInstanceMenu';
+import EditInstanceForm from '../EditInstanceForm';
+import DeleteInstanceMenu from '../DeleteInstanceMenu';
 
 
 import Completed from '../Completed'; 
 import Steps from '../Steps'; 
 
-// add styling here
+const Edit = styled.div`
+  display: none;
+  top: 10px;
+  right: -25px;
+  position: absolute;
+  cursor: pointer;
+`;
+
+const Delete = styled.div`
+  display: none;
+  position: absolute;
+  right: -25px;
+  top: 55px;
+  cursor: pointer;
+`;
+
+const TaskContainer = styled.div`
+  position: relative;
+  width: 100%;
+
+  &:hover ${Edit} {
+    display: block;
+  }
+
+  &:hover ${Delete} {
+    display: block;
+  }
+`;
+
 const TaskStyleWrapper = styled.div(({
+  isEditMode,
   selected,
-  isDeleting,
+  isDeleteMode,
 }) => `
-  margin: 2em 1em;
-  padding: 1.5em;
-  border: ${selected ? '1px solid aquamarine': '1px solid white'};
-  border-radius: 10px;
-  box-shadow: 5px 5px 10px #888888;
-  background-color: ${isDeleting && 'tomato'};
+  display: ${selected ? 'block' : 'flex'};
+  align-items: center;
+  text-align: left;
+  position: relative;
+  margin: 10px;
+  margin-left: ${selected || isEditMode || isDeleteMode ? '-10px' : '10px'};
+  padding: 10px 15px;
   cursor: ${selected ? 'auto' : 'pointer'};
+  background: #FFFFFF;
+  box-shadow: 0px 4px 10px #8CC2F1;
+  border-radius: 15px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #606060;
+  height: ${selected || isEditMode ? 'auto' : '110px'};
+  width: 90%;
+  padding-top: ${isEditMode ? '20px' : '0'};
 
   &:hover {
     border: 1px solid aquamarine;
   }
+
+  @media only screen and (max-width: 500px) {
+    width: 86%;
+    margin-left: ${selected ? '0' : ''};
+  }
+  @media only screen and (max-width: 320px) {
+    margin-left: 5%;
+    width: 83%;
+  }
 `);
 
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  padding: 0;
-  color: #bbbbbb;
-  transition: color 0.5s ease;
-  &:hover {
-    color: ${props => props.hoverColor || '#000000'};
-  }
+const TaskCont = styled.div`
+  display: flex;
+  padding: 20px 0;
+`;
+
+const Round = styled.div`
+  width: 23px;
+  height: 23px;
+  background: #B4EAFB;
+  border-radius: 50%;
+  margin: 0 10px;
+`;
+
+const Check = styled.img`
+  position: absolute;
+  left: 25px;
+`;
+
+const TaskTitle = styled.div`
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 27px;
+  color: #606060;
+`;
+
+const TaskDescription = styled.div`
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: #A6A6A6;
 `;
 
 function Task({
@@ -55,6 +129,9 @@ function Task({
   deleteInstance,
   refetchQueries,
   onSelect,
+  showCreateTasks,
+  showSteps,
+  isStepsShow
 }) {
   const [taskValue, updateTaskValue] = useState(task.value);
   const [isEditMode, updateIsEditMode] = useState(false);
@@ -67,14 +144,6 @@ function Task({
             const completed = completedData ? completedData.instances[0] : [];
   const stepData = task.children && task.children.find(child => child.typeId === TYPE_STEP_ID);
   const steps = stepData ? stepData.instances : [];
-
-  if (!selected) {
-    return (
-      <TaskStyleWrapper onClick={() => onSelect(task.id)}>
-        {taskValue}
-      </TaskStyleWrapper>
-    );
-  }
 
   function handleTaskValueChange(e) {
     updateTaskValue(e.target.value);
@@ -104,7 +173,7 @@ function Task({
 
   if (isEditMode) {
     return (
-      <TaskStyleWrapper>
+      <TaskStyleWrapper isEditMode={isEditMode}>
         <EditInstanceForm
           id={task.id}
           label="Task Value:" 
@@ -145,10 +214,11 @@ function Task({
     return (
       <TaskStyleWrapper 
         selected={selected}
-        isDeleting={isDeleting}
+        isDeleteMode={isDeleteMode}
       >
         {taskValue}
         <DeleteInstanceMenu
+          type="Task"
           onDelete={handleDelete}
           onCancel={handleCancelDelete}
           disabled={isDeleting}
@@ -157,30 +227,50 @@ function Task({
     );
   }
 
+  if (!selected) {
+    return (
+      <TaskContainer  style={{ opacity: showCreateTasks || isStepsShow ? '0.5' : '1' }}>
+        <TaskStyleWrapper style={{ 
+          background : completed.value === "true" ? 'rgba(255, 253, 246, 0.68)' : '#FFFFFF',
+          textDecoration: completed.value === "true" ? 'line-through' : 'none' }} 
+          onClick={() => {onSelect(task.id, 'Steps'); showSteps();}}>
+          <Round />
+          { completed.value === "true" &&
+          <Check src="/images/check.png" alt=""/>
+          }
+          <div>
+            <TaskTitle>{taskValue}</TaskTitle>
+            <TaskDescription>{taskValue}</TaskDescription>
+          </div>
+        </TaskStyleWrapper>
+        <Edit onClick={() => updateIsEditMode(true)}>
+          <img src="/images/edit.png"
+          alt=""
+        />
+        </Edit>
+        <Delete onClick={() => updateIsDeleteMode(true)}>
+          <img src="/images/delete.png"
+          alt=""
+        />
+        </Delete>
+      </TaskContainer>
+    );
+  }
+
   return (
     <TaskStyleWrapper selected={selected}>
-      {taskValue}
-      <Button
-        type="button"
-        onClick={() => updateIsEditMode(true)}
-      >
-        &#9998;
-      </Button>
-      <Button
-        type="button"
-        onClick={() => updateIsDeleteMode(true)}
-      >
-        &#128465;
-      </Button>
-
-      
-< Completed
-              completed = { completed }
-              taskId = {task.id}
-              label="Completed?"
-              refetchQueries={refetchQueries}
-      />
-< Steps
+      <TaskCont>
+        <Completed
+          completed = { completed }
+          taskId = {task.id}
+          refetchQueries={refetchQueries}
+        />
+        <div>
+          <TaskTitle>{taskValue}</TaskTitle>
+          <TaskDescription>{taskValue}</TaskDescription>
+        </div>
+      </TaskCont>
+      < Steps
               steps = { steps }
               taskId = {task.id}
               label="Step?"

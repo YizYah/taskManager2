@@ -49,7 +49,6 @@ function UserCreationForm({ parentId, createUser, refetchQueries }) {
   return (
     <div>
       <label htmlFor={selectId}>
-        User:
         <UserSelect
           id={selectId}
           onSubmit={handleSubmit}

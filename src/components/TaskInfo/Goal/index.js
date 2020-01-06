@@ -9,28 +9,57 @@ import {
   DELETE_GOAL_FOR_TASK_INFO_ACTION_ID,
 } from '../../../config';
 
-import EditInstanceForm from '../../EditInstanceForm';
-import DeleteInstanceMenu from '../../DeleteInstanceMenu';
+import EditInstanceForm from '../EditGoalForm';
+import DeleteInstanceMenu from '../DeleteInstanceMenu';
 
 
 
 // add styling here
 const GoalStyleWrapper = styled.div(({
   selected,
-  isDeleting,
+  isEditMode,
+  isDeleteMode
 }) => `
-  margin: 2em 1em;
-  padding: 1.5em;
-  border: ${selected ? '1px solid aquamarine': '1px solid white'};
+  position: relative;
+  margin: 1em 10px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  background: #EAF4FD;
+  box-shadow: 0px 4px 10px #1A85E5;
+  height: ${isDeleteMode || isEditMode ? 'auto' : '50px'};
   border-radius: 10px;
-  box-shadow: 5px 5px 10px #888888;
-  background-color: ${isDeleting && 'tomato'};
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #606060;
   cursor: ${selected ? 'auto' : 'pointer'};
 
   &:hover {
     border: 1px solid aquamarine;
   }
+
+  @media only screen and (max-width: 500px) {
+    align-items: ${isDeleteMode ? 'end' : 'center'};
+    padding-top: ${isDeleteMode ? '15px' : '0'};
+  }
 `);
+
+const Edit = styled.div`
+  top: 6px;
+  right: 50px;
+  position: absolute;
+  cursor: pointer;
+`;
+
+const Delete = styled.div`
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  cursor: pointer;
+`;
 
 const Button = styled.button`
   background: none;
@@ -98,7 +127,7 @@ function Goal({
 
   if (isEditMode) {
     return (
-      <GoalStyleWrapper>
+      <GoalStyleWrapper isEditMode={isEditMode} >
         <EditInstanceForm
           id={goal.id}
           label="Goal Value:" 
@@ -140,9 +169,11 @@ function Goal({
       <GoalStyleWrapper 
         selected={selected}
         isDeleting={isDeleting}
+        isDeleteMode={isDeleteMode}
       >
         {goalValue}
         <DeleteInstanceMenu
+          type="Goal"
           onDelete={handleDelete}
           onCancel={handleCancelDelete}
           disabled={isDeleting}
@@ -154,20 +185,16 @@ function Goal({
   return (
     <GoalStyleWrapper selected={selected}>
       {goalValue}
-      <Button
-        type="button"
-        onClick={() => updateIsEditMode(true)}
-      >
-        &#9998;
-      </Button>
-      <Button
-        type="button"
-        onClick={() => updateIsDeleteMode(true)}
-      >
-        &#128465;
-      </Button>
-
-      
+      <Edit onClick={() => updateIsEditMode(true)}>
+        <img src="/images/edit.png"
+        alt=""
+        />
+      </Edit>
+      <Delete onClick={() => updateIsDeleteMode(true)}>
+        <img src="/images/delete.png"
+        alt=""
+        />
+      </Delete>
     </GoalStyleWrapper>
   );
 }

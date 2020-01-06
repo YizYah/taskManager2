@@ -7,6 +7,44 @@ import Goal from '../Goal';
 
 const GoalsStyleWrapper = styled.div``;
 
+const GoalsHead = styled.div`
+  position: relative;
+  display: flex;
+  padding: 20px 0 0;
+`;
+
+const GoalsTitle = styled.div`
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 36px;
+  color: #FFFFFF;
+  padding-left: 10px;
+`;
+
+const GoalsLength = styled.span`
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21px;
+  letter-spacing: 1px;
+  color: #B4EAFB;
+`;
+
+const GoalsTotal = styled.span`
+  font-size: 12px;
+`;
+
+const AddGoals = styled.img`
+  width:50px;
+  position: absolute;
+  right: 0;
+  top: 10px
+  cursor: pointer;
+`;
+
 const Button = styled.button`
   display: block;
   margin: 0 auto;
@@ -15,6 +53,7 @@ const Button = styled.button`
 class Goals extends Component {
   state = {
     selectedGoalId: null,
+    showCreateGoal: false
   };
 
   wrapperRef = createRef();
@@ -41,16 +80,27 @@ class Goals extends Component {
 
   handleSelect = id => this.setState({ selectedGoalId: id });
 
+  showAdd = () => {
+    this.setState({ showCreateGoal: !this.state.showCreateGoal })
+  }
+
   render () {
     const { stepId, goals, refetchQueries, onUpdate } = this.props;
     const { selectedGoalId } = this.state;
 
     return (
       <GoalsStyleWrapper ref={this.wrapperRef} onClick={this.handleClick}>
-        <GoalCreationForm
-          parentId={stepId}
-          refetchQueries={refetchQueries}
-        />
+        <GoalsHead>
+          <GoalsTitle>Goals <GoalsLength>(2/<GoalsTotal>4</GoalsTotal>)</GoalsLength></GoalsTitle>
+          <AddGoals src="/images/add-icon.png" alt=""
+          onClick={this.showAdd}></AddGoals>
+        </GoalsHead>
+        {this.state.showCreateGoal &&
+          <GoalCreationForm
+            parentId={stepId}
+            refetchQueries={refetchQueries}
+          />
+        }
 
         {goals.map(goal => (
           <Goal

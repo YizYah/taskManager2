@@ -5,15 +5,30 @@ import {graphql} from '@apollo/react-hoc';
 
 import {DELETE_USER_FOR_TASK_INFO_ACTION_ID} from '../../../config';
 
-
-
 // add styling here
 const UserStyleWrapper = styled.div`
-  margin: 2em 1em;
-  padding: 1.5em;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 5px 5px 10px #888888;
+  position: relative;
+
+  @media only screen and (max-width: 500px){
+    margin:10px;
+  }
+`;
+
+const UserComponent = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 105px;
+  height: 40px;
+  background: #B4EAFB;
+  border-radius: 20px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  color: #479EEC;
+  margin-right: 10px;
 `;
 
 const Button = styled.button`
@@ -29,19 +44,25 @@ const Button = styled.button`
   }
 `;
 
-const DeleteMenu = styled.div`
-  color: red;
-  margin: 1em;
-  padding: 1em;
-  border: 1px solid #eeeeee;
+const Delete = styled.img`
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+  width: 12px;
 `;
 
-function User({user, parentId, updateInstance, deleteInstance, refetchQueries}) {
+const Usr = styled.img`
+  border-radius: 50%;
+  margin: 0 5px;
+  width: 32px;
+`;
+
+function User({user, team, parentId, updateInstance, deleteInstance, refetchQueries}) {
   const [ isDeleteMode, updateIsDeleteMode ] = useState(false);
   const [ isDeleting, updateIsDeleting ] = useState(false);
 
-  
-
+  const usr = team.filter(t => user.value === t.name);
+console.log(usr)
   async function handleDelete() {
     updateIsDeleting(true);
 
@@ -96,38 +117,17 @@ function User({user, parentId, updateInstance, deleteInstance, refetchQueries}) 
     {/*</UserStyleWrapper>*/}
   return (
     <UserStyleWrapper isDeleting={isDeleting}>
-      {user.value}
-      {isDeleteMode ? (
-          <DeleteMenu>
-            Delete?
-            <Button
-              type="button"
-              hoverColor="#00FF00"
-              onClick={handleDelete}
-              disabled={isDeleting}
-            >
-              &#10003;
-            </Button>
-            <Button
-              type="button"
-              hoverColor="#FF0000"
-              onClick={() => updateIsDeleteMode(false)}
-              disabled={isDeleting}
-            >
-              &#10005;
-            </Button>
-          </DeleteMenu>
-        ) :
-        (
-          <Button
-            type="button"
-            onClick={() => updateIsDeleteMode(true)}
-          >
-            &#128465;
-          </Button>
-        )
+      { usr.length > 0 &&
+      <UserComponent>
+        <Usr src={usr[0].photo} alt="" />
+        {user.value}
+        <Delete
+        src="/images/delete-user.png"
+        onClick={handleDelete}
+        alt=""
+      />
+      </UserComponent>
       }
-      
     </UserStyleWrapper>
   );
 }

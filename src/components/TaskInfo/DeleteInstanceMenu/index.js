@@ -17,14 +17,18 @@ const Container = styled.div`
   padding: 1em;
   font-family: Poppins;
   font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: #FFFDF6;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 27px;
+  color: #606060;
+
+  @media only screen and (max-width: 500px) {
+    margin: -18px 0px 50px 0;
+  } 
 `;
 
 const ButtonDelete = styled.button`
-  background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #FFFFFF;
+  background: linear-gradient(180deg, #1C87E6, #1C87E6), #FFFFFF;
   box-shadow: 0px 4px 10px rgba(86, 204, 242, 0.5);
   border-radius: 20px;
   font-family: Poppins;
@@ -32,12 +36,12 @@ const ButtonDelete = styled.button`
   font-weight: 600;
   font-size: 14px;
   line-height: 21px;
-  color: #1A85E5;
+  color: #FFFFFF;
   border: none;
   position: absolute;
-  right: 10px;
+  right: 20px;
   padding: 10px 25px;
-  bottom: 15px;
+  bottom: 20px;
   cursor: pointer;
   &:hover {
     color: ${props => props.hoverColor || '#1A85E5'};
@@ -45,7 +49,7 @@ const ButtonDelete = styled.button`
 `;
 
 const ButtonCancel = styled.button`
-  background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #FFFFFF;
+  background: linear-gradient(180deg, #1C87E6, #1C87E6), #FFFFFF;
   box-shadow: 0px 4px 10px rgba(86, 204, 242, 0.5);
   border-radius: 20px;
   font-family: Poppins;
@@ -53,12 +57,12 @@ const ButtonCancel = styled.button`
   font-weight: 600;
   font-size: 14px;
   line-height: 21px;
-  color: #1A85E5;
+  color: #FFFFFF;
   border: none;
   position: absolute;
-  right: 115px;
+  right: 125px;
   padding: 10px 20px;
-  bottom: 15px;
+  bottom: 20px;
   cursor: pointer;
   &:hover {
     color: ${props => props.hoverColor || '#1A85E5'};
@@ -66,10 +70,10 @@ const ButtonCancel = styled.button`
 `;
 
 function DeleteInstanceMenu({
-  type,
   onDelete,
   onCancel,
   disabled,
+  type
 }) {
   return (
     <Container>

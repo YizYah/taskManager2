@@ -10,19 +10,18 @@ import AuthTabs from './components/AuthTabs';
 import Projects from './components/ProjectsForUser/Projects';
 
 const Wrapper = styled.div`
-  padding: 5em 5em;
-  min-width: 480px;
+  width: 100%;
+  height: 100%;
 `;
 
 const LoginWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const App = () => (
   <>
-    <NavBar />
+    {/* <NavBar /> */}
     <Wrapper className="App">
       <NoStackConsumer>
         {({ loading, currentUser }) => {
@@ -33,8 +32,10 @@ const App = () => (
               <LoginWrapper>
                 <AuthTabs
                   menuTitles={[
-                    'Login',
-                    'Register',
+                    { title: 'Login', 
+                      message: 'Existing user?'},
+                    { title: 'Sign Up', 
+                      message: 'New to MultiTask?'}
                   ]}
                 >
                   <LoginForm />
