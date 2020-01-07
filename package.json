@@ -8,6 +8,7 @@
     "@apollo/react-hoc": "^3.1.3",
     "@apollo/react-hooks": "^3.1.3",
     "@nostack/no-stack": "^2.0.0-alpha.6",
+    "@sandstreamdev/react-swipeable-list": "github:sandstreamdev/react-swipeable-list",
     "@shopify/react-compose": "^1.0.9",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { EXECUTE_ACTION } from '@nostack/no-stack';
 import compose from '@shopify/react-compose';
 import { graphql } from '@apollo/react-hoc';
+import { SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
 
 import {
   UPDATE_TASK_FOR_TASK_INFO_ACTION_ID,
@@ -19,17 +20,25 @@ import Steps from '../Steps';
 const Edit = styled.div`
   display: none;
   top: 10px;
-  right: -25px;
+  right: 8px;
   position: absolute;
   cursor: pointer;
+
+  @media only screen and (max-width: 500px) {
+    display:none !important;
+  }
 `;
 
 const Delete = styled.div`
   display: none;
   position: absolute;
-  right: -25px;
+  right: 8px;
   top: 55px;
   cursor: pointer;
+
+  @media only screen and (max-width: 500px) {
+    display:none !important;
+  }
 `;
 
 const TaskContainer = styled.div`
@@ -55,7 +64,7 @@ const TaskStyleWrapper = styled.div(({
   text-align: left;
   position: relative;
   margin: 10px;
-  margin-left: ${selected || isEditMode || isDeleteMode ? '-10px' : '10px'};
+  margin-left: ${selected || isEditMode || isDeleteMode ? '-35px' : '10px'};
   padding: 10px 15px;
   cursor: ${selected ? 'auto' : 'pointer'};
   background: #FFFFFF;
@@ -68,7 +77,7 @@ const TaskStyleWrapper = styled.div(({
   line-height: 21px;
   color: #606060;
   height: ${selected || isEditMode ? 'auto' : '110px'};
-  width: 90%;
+  width: 86%;
   padding-top: ${isEditMode ? '20px' : '0'};
 
   &:hover {
@@ -78,6 +87,9 @@ const TaskStyleWrapper = styled.div(({
   @media only screen and (max-width: 500px) {
     width: 86%;
     margin-left: ${selected ? '0' : ''};
+    margin-left: ${isEditMode | isDeleteMode ? '-3px' : ''};
+    padding-bottom: ${isDeleteMode ? '0' : ''};
+    align-items:  ${isDeleteMode ? 'baseline' : 'center'};
   }
   @media only screen and (max-width: 320px) {
     margin-left: 5%;
@@ -229,6 +241,17 @@ function Task({
 
   if (!selected) {
     return (
+      <SwipeableListItem
+      blockSwipe={window.innerWidth > 500 ? true : false}
+      swipeLeft={{
+        content:<img src="/images/edit.png" alt=""/>,
+        action: () => updateIsEditMode(true)
+      }}
+      swipeRight={{
+        content:  <img src="/images/delete.png" alt=""/>,
+        action: () => updateIsDeleteMode(true)
+      }}
+      > 
       <TaskContainer  style={{ opacity: showCreateTasks || isStepsShow ? '0.5' : '1' }}>
         <TaskStyleWrapper style={{ 
           background : completed.value === "true" ? 'rgba(255, 253, 246, 0.68)' : '#FFFFFF',
@@ -254,6 +277,7 @@ function Task({
         />
         </Delete>
       </TaskContainer>
+      </SwipeableListItem>
     );
   }
 

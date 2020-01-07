@@ -17,7 +17,7 @@ const ProjectsWrapper = styled.div`
   width: 100%;
   height: 100%;
   background: #EAF4FD;
-  overflow: hidden;
+  overflow-y: hidden;
 `;
 
 const MenuContainer = styled.div`
@@ -106,7 +106,7 @@ const ProjectsContainer = styled.div`
   position: relative;
   padding-left: 60px;
   background: #EAF4FD;
-  overflow: hidden;
+  overflow-y: hidden;
   height: 100%;
   width: 100%;
 

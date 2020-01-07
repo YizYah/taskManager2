@@ -20,15 +20,15 @@ const TasksStyleWrapper = styled.div`
   position: absolute;
   z-index: 2;
   position: relative;
-  width: 700px;
+  width: 730px;
   margin: 1em 0em;
 
   @media only screen and (max-width: 500px) {
-    width: 120%;
-    margin-left: -16%;
+    width: 119%;
+    margin-left: -15%;
   }
-  @media only screen and (max-width: 360px) {
-    margin-left: -17%;
+  @media only screen and (max-width: 375px) {
+    margin-left: -16%;
   }
   @media only screen and (max-width: 320px) {
     width: 107%;

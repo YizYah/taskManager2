@@ -37,7 +37,11 @@ const Name = styled.input`
   }
 
   @media only screen and (max-width: 500px) {
-    width: 86%;
+    width: 89%;
+  }
+
+  @media only screen and (max-width: 320px) {
+    width: 82%;
   }
 `;
 
@@ -73,7 +77,11 @@ const Description = styled.textarea`
   }
 
   @media only screen and (max-width: 500px) {
-    width: 86%;
+    width: 89%;
+  }
+
+  @media only screen and (max-width: 320px) {
+    width: 82%;
   }
 `;
 

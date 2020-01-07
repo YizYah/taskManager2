@@ -23,8 +23,8 @@ const Container = styled.div`
   color: #606060;
 
   @media only screen and (max-width: 500px) {
-    margin: -18px 0px 50px 0;
-  } 
+    padding:unset;
+  }
 `;
 
 const ButtonDelete = styled.button`

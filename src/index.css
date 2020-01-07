@@ -166,6 +166,13 @@ input#nostack-password {
   margin-top: -20px;
 }
 
+.SwipeableListItem_content__1k1mn{
+  background-color: transparent !important;
+}
+
+.SwipeableListItem_swipeableListItem__3xnuO{
+  overflow: unset !important;
+}
 @media only screen and (max-width: 500px){
   .css-2b097c-container, .css-14jk2my-container {
     width: 100%;

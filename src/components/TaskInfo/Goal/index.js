@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { EXECUTE_ACTION } from '@nostack/no-stack';
 import compose from '@shopify/react-compose';
 import { graphql } from '@apollo/react-hoc';
-
 import {
   UPDATE_GOAL_FOR_TASK_INFO_ACTION_ID,
   DELETE_GOAL_FOR_TASK_INFO_ACTION_ID,

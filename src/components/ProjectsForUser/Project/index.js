@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { EXECUTE_ACTION } from '@nostack/no-stack';
 import compose from '@shopify/react-compose';
 import { graphql } from '@apollo/react-hoc';
+import { SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
+import '@sandstreamdev/react-swipeable-list/dist/styles.css';
 
 import {
   UPDATE_PROJECT_FOR_PROJECTS_FOR_USER_ACTION_ID,
@@ -21,6 +23,10 @@ let Edit = styled.div`
   right: 15px;
   position: absolute;
   cursor: pointer;
+
+  @media only screen and (max-width: 500px) {
+    display:none !important;
+  }
 `;
 
 let Delete = styled.div`
@@ -29,6 +35,10 @@ let Delete = styled.div`
   right: 15px;
   top: 55px;
   cursor: pointer;
+
+  @media only screen and (max-width: 500px) {
+    display:none !important;
+  }
 `;
 
 const ProjectStyleWrapper = styled.div(({
@@ -53,10 +63,15 @@ const ProjectStyleWrapper = styled.div(({
   color: #FFFFFF;
 
   @media only screen and (max-width: 500px) {
-    width: 100%;
+    width: ${selected ? '84%' : '100%'};
   }
 
   @media only screen and (max-width: 320px) {
+    width: ${selected ? '80%' : '100%'};
+  }
+
+  @media only screen and (max-width: 320px) {
+    width: ${selected ? '93%' : '100%'};
     padding: 10px;
   }
 `);
@@ -305,50 +320,22 @@ function Project({
     );
   }
 
-  function onSwipeLeftListener() {
-    ProjectContainer = styled.div`
-      @media only screen and (max-width: 500px) {
-        margin-left: -30px;
-      }
-    `;
-
-    Edit = styled.div`
-      @media only screen and (max-width: 500px) {
-        right: -53px;
-        display: block;
-      }
-    `;
-    Delete = styled.div`
-      @media only screen and (max-width: 500px) {
-        right: -53px;
-        display: block;
-      }
-    `;
-  }
-  function onSwipeRightListener() {
-    ProjectContainer = styled.div`
-      @media only screen and (max-width: 500px) {
-        margin-left: unset;
-      }
-    `;
-  console.log(1)
-
-    Edit = styled.div`
-    @media only screen and (max-width: 500px) {
-      display: none;
-    }
-   `;
-    Delete = styled.div`
-      @media only screen and (max-width: 500px) {
-        display: none;
-      }
-    `;
-  }
-
+  
   if (!selected) {
     return (
-      // Please put a trigger if project is done to add opacity to the project container
-      // style={{ opacity: showCreateProject || projectDone ? '0.5' : '1' }}
+      <SwipeableListItem
+        blockSwipe={window.innerWidth > 500 ? true : false}
+        swipeLeft={{
+          content:<img src="/images/edit.png" alt=""/>,
+          action: () => updateIsEditMode(true)
+        }}
+        swipeRight={{
+          content:  <img src="/images/delete.png" alt=""/>,
+          action: () => updateIsDeleteMode(true)
+        }}
+      > 
+       {/* Please put a trigger if project is done to add opacity to the project container
+       style={{ opacity: showCreateProject || projectDone ? '0.5' : '1' }} */}
       <ProjectContainer style={{ opacity: showCreateProject || isTasksShow ? '0.5' : '1' }}>
         <ProjectStyleWrapper onClick={() => {onSelect(project.id); showTasks();}}>
           <ProjectDetail>
@@ -382,6 +369,7 @@ function Project({
         />
         </Delete>
       </ProjectContainer>
+      </SwipeableListItem>
     );
   }
 

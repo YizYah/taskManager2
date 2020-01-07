@@ -298,7 +298,7 @@ const AuthTabs = ({ menuTitles, children }) => {
             }
             console.log(child)
             return (
-              <div class="test">{child}</div>
+              <div>{child}</div>
             );
           })}
           <CheckBoxContainer>

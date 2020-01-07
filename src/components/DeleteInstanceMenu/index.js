@@ -21,6 +21,11 @@ const Container = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #FFFDF6;
+
+  @media only screen and (max-width: 500px) {
+    margin-top: 0;
+    padding-bottom: 30px;
+  }
 `;
 
 const ButtonDelete = styled.button`

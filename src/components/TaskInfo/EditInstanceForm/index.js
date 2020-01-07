@@ -52,7 +52,7 @@ const TaskName = styled.input`
   }
 
   @media only screen and (max-width: 500px) {
-    width: 86%;
+    width: 90%;
   }
 `;
 
@@ -88,7 +88,7 @@ const TaskDescription = styled.textarea`
   }
 
   @media only screen and (max-width: 500px) {
-    width: 86%;
+    width: 90%;
   }
 `;
 

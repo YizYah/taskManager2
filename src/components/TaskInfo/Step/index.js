@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { EXECUTE_ACTION } from '@nostack/no-stack';
 import compose from '@shopify/react-compose';
 import { graphql } from '@apollo/react-hoc';
+import { SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
 
 import {
   UPDATE_STEP_FOR_TASK_INFO_ACTION_ID,
@@ -18,18 +19,26 @@ import Users from '../Users';
 
 const Edit = styled.div`
   display: none;
-  top: 10px;
+  top: 25px;
   right: 30px;
   position: absolute;
   cursor: pointer;
+
+  @media only screen and (max-width: 500px) {
+    display:none !important;
+  }
 `;
 
 const Delete = styled.div`
   display: none;
   position: absolute;
   right: -15px;
-  top: 10px;
+  top: 25px;
   cursor: pointer;
+
+  @media only screen and (max-width: 500px) {
+    display:none !important;
+  }
 `;
 
 const StepContainer = styled.div`
@@ -52,7 +61,7 @@ const StepCont = styled.div`
 
 const StepStyleWrapper = styled.div(({
   selected,
-  isDeleting,
+  isDeleteMode,
 }) => `
   display: ${selected ? 'block' : 'flex'};
   position: relative;
@@ -73,6 +82,11 @@ const StepStyleWrapper = styled.div(({
 
   &:hover {
     border: 1px solid aquamarine;
+  }
+
+  @media only screen and (max-width: 500px) {
+    display: ${isDeleteMode ? 'flex' : ''};
+    align-items: ${isDeleteMode ? 'baseline' : ''};
   }
 `);
 
@@ -213,8 +227,19 @@ function Step({
 
   if (!selected) {
     return (
-      // Please put a trigger if step is completed to add opacity to the project container
-      // style={{ opacity: showCreateProject || stepDone ? '0.5' : '1' }}
+      <SwipeableListItem
+      blockSwipe={window.innerWidth > 500 ? true : false}
+      swipeLeft={{
+        content:<img src="/images/edit.png" alt=""/>,
+        action: () => updateIsEditMode(true)
+      }}
+      swipeRight={{
+        content:  <img src="/images/delete.png" alt=""/>,
+        action: () => updateIsDeleteMode(true)
+      }}
+    > 
+       {/* Please put a trigger if step is completed to add opacity to the project container
+       style={{ opacity: showCreateProject || stepDone ? '0.5' : '1' }} */}
       <StepContainer style={{ opacity: showCreateSteps || isGoalsShow ? '0.5' : '1' }}>
         <StepStyleWrapper onClick={() => {onSelect(step.id); showGoals();}}>
           <Round />
@@ -232,6 +257,7 @@ function Step({
         />
         </Delete>
       </StepContainer>
+    </SwipeableListItem>
     );
   }
 
