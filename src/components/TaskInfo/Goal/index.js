@@ -60,18 +60,6 @@ const Delete = styled.div`
   cursor: pointer;
 `;
 
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  padding: 0;
-  color: #bbbbbb;
-  transition: color 0.5s ease;
-  &:hover {
-    color: ${props => props.hoverColor || '#000000'};
-  }
-`;
 
 function Goal({
   goal,

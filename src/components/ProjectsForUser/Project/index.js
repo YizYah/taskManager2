@@ -51,7 +51,7 @@ const ProjectStyleWrapper = styled.div(({
   background-color: ${isDeleting && 'tomato'};
   cursor: ${selected ? 'auto' : 'pointer'};
   width: 600px;
-  height: 180px;
+  height: 100px;
   background: linear-gradient(180deg, #56CCF2 0%, #1A85E5 100%), #FFFFFF;
   box-shadow: 0px 4px 10px #8CC2F1;
   border-radius: 15px;
@@ -103,18 +103,6 @@ let ProjectContainer = styled.div`
   }
 `;
 
-const Round = styled.div`
-  width: 23px;
-  height: 23px;
-  background: #B4EAFB;
-  border-radius: 50%;
-  margin-right: 20px;
-`;
-
-const Check = styled.img`
-  position: absolute;
-`;
-
 const ProjectDetail = styled.div`
   display: flex;
   text-align: left;
@@ -138,49 +126,6 @@ const ProjectDescription = styled.div`
   color: #B4EAFB;
 `;
 
-const ProjectTeamContainer = styled.div`
-  background: linear-gradient(0deg,#2ca7f3 0%,#208ada 100%),#FFFFFF;
-  border-radius: 15px;
-  display: flex;
-  position: absolute;
-  padding: 10px 30px;
-  left: 12px;
-  bottom: 12px;
-  width: 86%;
-
-  @media only screen and (max-width: 500px) {
-    width: 77%;
-  }
-  @media only screen and (max-width: 360px) {
-    width: 73%;
-  }
-  @media only screen and (max-width: 320px) {
-    width: 70%;
-  }
-`;
-
-const ProjectTeam = styled.img`
-  border-radius: 50%;
-  margin-right: -10px;
-  width: 32px;
-`;
-
-const TeamLength = styled.div`
-  border-radius: 50%;
-  margin-right: -15px;
-  background: #B4EAFB;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 21px;
-  color: #1A85E5;
-  width: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const TasksLength = styled.div`
   font-family: Poppins;
   font-style: normal;
@@ -195,19 +140,6 @@ const TasksLength = styled.div`
 
 const TasksTotal = styled.span`
   font-size: 12px;
-`;
-
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  padding: 0;
-  color: #bbbbbb;
-  transition: color 0.5s ease;
-  &:hover {
-    color: ${props => props.hoverColor || '#000000'};
-  }
 `;
 
 function Project({
@@ -304,7 +236,6 @@ function Project({
         isDeleting={isDeleting}
       >
         <ProjectDetail>
-          <Round />
           <div>
             <ProjectTitle>{projectValue}</ProjectTitle>
             <ProjectDescription>{projectValue}</ProjectDescription>
@@ -334,29 +265,15 @@ function Project({
           action: () => updateIsDeleteMode(true)
         }}
       > 
-       {/* Please put a trigger if project is done to add opacity to the project container
-       style={{ opacity: showCreateProject || projectDone ? '0.5' : '1' }} */}
       <ProjectContainer style={{ opacity: showCreateProject || isTasksShow ? '0.5' : '1' }}>
         <ProjectStyleWrapper onClick={() => {onSelect(project.id); showTasks();}}>
           <ProjectDetail>
-            <Round />
-            {/* please add condition to show the checkmark if project is done 
-              and delete the style={{display:'none'}} */}
-            <Check style={{display:'none'}} src="/images/check.png" alt=""/>
             <div>
               <ProjectTitle>{projectValue}</ProjectTitle>
               <ProjectDescription>{projectValue}</ProjectDescription>
             </div>
           </ProjectDetail>
-          <ProjectTeamContainer>
-            {users.slice(0, 3).map((list, index) => (
-              <ProjectTeam key={index} src={list.photo} alt=""/>
-            ))}
-            { users.length > 3 &&
-            <TeamLength>+{users.length - 3}</TeamLength>
-            }
-            <TasksLength>Tasks (2/<TasksTotal>4</TasksTotal>)</TasksLength>
-          </ProjectTeamContainer>
+          <TasksLength>Tasks (2/<TasksTotal>4</TasksTotal>)</TasksLength>
         </ProjectStyleWrapper>
         <Edit onClick={() => updateIsEditMode(true)}>
            <img src="/images/edit.png"
@@ -376,24 +293,12 @@ function Project({
   return (
     <ProjectStyleWrapper selected={selected}>
       <ProjectDetail>
-        <Round />
-        {/* please add condition to show the checkmark if project is done 
-            and delete the style={{display:'none'}} */}
-          <Check style={{display:'none'}} src="/images/check.png" alt=""/>
           <div>
             <ProjectTitle>{projectValue}</ProjectTitle>
             <ProjectDescription>{projectValue}</ProjectDescription>
           </div>
         </ProjectDetail>
-        <ProjectTeamContainer>
-          {users.slice(0, 3).map((list, index) => (
-            <ProjectTeam key={index} src={list.photo} alt=""/>
-          ))}
-          { users.length > 3 &&
-          <TeamLength>+{users.length - 3}</TeamLength>
-          }
-          <TasksLength>Tasks (2/<TasksTotal>4</TasksTotal>)</TasksLength>
-        </ProjectTeamContainer>
+        <TasksLength>Tasks (2/<TasksTotal>4</TasksTotal>)</TasksLength>
       < Tasks menuActive={menuActive} projectId = {project.id} />
     </ProjectStyleWrapper>
   );

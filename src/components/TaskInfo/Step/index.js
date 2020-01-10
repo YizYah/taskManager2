@@ -54,11 +54,6 @@ const StepContainer = styled.div`
   }
 `;
 
-const StepCont = styled.div`
-  position: relative;
-  display: flex;
-`;
-
 const StepStyleWrapper = styled.div(({
   selected,
   isDeleteMode,
@@ -90,32 +85,6 @@ const StepStyleWrapper = styled.div(({
   }
 `);
 
-const Round = styled.div`
-  width: 23px;
-  height: 23px;
-  background: #B4EAFB;
-  border-radius: 50%;
-  margin: 0 10px;
-`;
-
-const Check = styled.img`
-  position: absolute;
-  left: 30px;
-  top: 22px;
-`;
-
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  padding: 0;
-  color: #bbbbbb;
-  transition: color 0.5s ease;
-  &:hover {
-    color: ${props => props.hoverColor || '#000000'};
-  }
-`;
 
 function Step({
   step,
@@ -127,8 +96,7 @@ function Step({
   onSelect,
   showCreateSteps,
   showGoals,
-  isGoalsShow,
-  team
+  isGoalsShow
 }) {
   const [stepValue, updateStepValue] = useState(step.value);
   const [isEditMode, updateIsEditMode] = useState(false);
@@ -238,12 +206,8 @@ function Step({
         action: () => updateIsDeleteMode(true)
       }}
     > 
-       {/* Please put a trigger if step is completed to add opacity to the project container
-       style={{ opacity: showCreateProject || stepDone ? '0.5' : '1' }} */}
       <StepContainer style={{ opacity: showCreateSteps || isGoalsShow ? '0.5' : '1' }}>
         <StepStyleWrapper onClick={() => {onSelect(step.id); showGoals();}}>
-          <Round />
-          <Check style={{display: 'none'}} src="/images/check.png" alt=""/>  
           {stepValue}
         </StepStyleWrapper>
         <Edit onClick={() => updateIsEditMode(true)}>
@@ -263,11 +227,7 @@ function Step({
 
   return (
     <StepStyleWrapper selected={selected}>
-      <StepCont>
-        <Round />
-        <Check style={{display: 'none'}} src="/images/check.png" alt=""/>  
-        {stepValue}
-      </StepCont>     
+      {stepValue}  
       < Goals
         goals = { goals }
         stepId = {step.id}
@@ -275,7 +235,6 @@ function Step({
         refetchQueries={refetchQueries}
       />
       < Users
-        team = { team }
         users = { users }
         stepId = {step.id}
         label="User?"

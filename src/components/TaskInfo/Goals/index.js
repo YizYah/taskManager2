@@ -45,11 +45,6 @@ const AddGoals = styled.img`
   cursor: pointer;
 `;
 
-const Button = styled.button`
-  display: block;
-  margin: 0 auto;
-`;
-
 class Goals extends Component {
   state = {
     selectedGoalId: null,

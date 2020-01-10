@@ -64,7 +64,7 @@ const TaskStyleWrapper = styled.div(({
   text-align: left;
   position: relative;
   margin: 10px;
-  margin-left: ${selected || isEditMode || isDeleteMode ? '-35px' : '10px'};
+  margin-left: ${selected || isEditMode || isDeleteMode ? '-35px' : '12px'};
   padding: 10px 15px;
   cursor: ${selected ? 'auto' : 'pointer'};
   background: #FFFFFF;

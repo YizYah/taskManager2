@@ -57,12 +57,10 @@ const Usr = styled.img`
   width: 32px;
 `;
 
-function User({user, team, parentId, updateInstance, deleteInstance, refetchQueries}) {
+function User({user, parentId, updateInstance, deleteInstance, refetchQueries}) {
   const [ isDeleteMode, updateIsDeleteMode ] = useState(false);
   const [ isDeleting, updateIsDeleting ] = useState(false);
 
-  const usr = team.filter(t => user.value === t.name);
-console.log(usr)
   async function handleDelete() {
     updateIsDeleting(true);
 
@@ -117,9 +115,7 @@ console.log(usr)
     {/*</UserStyleWrapper>*/}
   return (
     <UserStyleWrapper isDeleting={isDeleting}>
-      { usr.length > 0 &&
       <UserComponent>
-        <Usr src={usr[0].photo} alt="" />
         {user.value}
         <Delete
         src="/images/delete-user.png"
@@ -127,7 +123,6 @@ console.log(usr)
         alt=""
       />
       </UserComponent>
-      }
     </UserStyleWrapper>
   );
 }

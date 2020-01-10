@@ -13,7 +13,7 @@ const UsersStyleWrapper = styled.div`
   }
 `;
 
-function Users({ users, team, stepId, refetchQueries }) {
+function Users({ users, stepId, refetchQueries }) {
   return (
     <UsersStyleWrapper>
       <UserCreationForm
@@ -24,7 +24,6 @@ function Users({ users, team, stepId, refetchQueries }) {
       {users.map(user => (
         <User
           key={user.id}
-          team={team}
           user={user}
           parentId={stepId}
           refetchQueries={refetchQueries}

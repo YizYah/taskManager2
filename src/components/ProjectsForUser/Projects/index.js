@@ -18,6 +18,10 @@ const ProjectsWrapper = styled.div`
   height: 100%;
   background: #EAF4FD;
   overflow-y: hidden;
+
+  @media only screen and (max-width: 500px) {
+    overflow-y: unset;
+  }
 `;
 
 const MenuContainer = styled.div`
@@ -68,27 +72,6 @@ const LogoDesktop = styled.img`
   display: block;
 `;
 
-const TeamTitle = styled.div`
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 26px;
-  line-height: 39px;
-  color: #606060;
-  padding: 60px 0 20px;
-  text-align: left;
-`;
-
-const TeamListContainer = styled.div`
-  display: flex;
-  margin-bottom: 80px;
-`;
-
-const TeamList = styled.img`
-  border-radius: 50%;
-  margin-right: 20px;
-`;
-
 const Copyright = styled.div`
   font-family: Montserrat;
   font-style: normal;
@@ -106,15 +89,14 @@ const ProjectsContainer = styled.div`
   position: relative;
   padding-left: 60px;
   background: #EAF4FD;
-  overflow-y: hidden;
+  overflow-y: scroll;
   height: 100%;
   width: 100%;
 
   @media only screen and (max-width: 500px) {
     width: 100%;
     padding-left: 0
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-y: unset;
   }
 `;
 
@@ -123,9 +105,7 @@ const ProjectsStyleWrapper = styled.div`
   flex-wrap: wrap;
   width: 100%;
   background: #EAF4FD;
-  overflow: auto;
-  height: 100%;
-  padding-right: 15px;
+  height: auto;
 
   @media only screen and (max-width: 500px) {
     width: 88%;
@@ -133,8 +113,6 @@ const ProjectsStyleWrapper = styled.div`
     margin-top: -40px;
     background: none;
     padding-bottom: 100px;
-    padding-right: 0;
-    overflow: unset;
   }
 `;
 
@@ -255,11 +233,6 @@ class Projects extends Component {
     showCreateProject: false,
     showTasks: false,
     menu: ['Projects', 'Tasks', 'Steps', 'Goals'],
-    team: [{name:'User1', photo: '/images/users/user1.png'},
-      {name:'User2', photo: '/images/users/user2.png'},
-      {name:'User3', photo: '/images/users/user3.png'},
-      {name:'User4', photo: '/images/users/user4.png'},
-    ],
     totalProjects: 2,
     projectsActive: 2,
     menuActive: 'Projects'
@@ -312,7 +285,7 @@ class Projects extends Component {
     };
     
     return (
-    <div style={{overflowY: 'hidden'}}>
+    <div>
       <Unit
         id={SOURCE_PROJECTS_FOR_USER_ID}
         typeRelationships={PROJECTS_FOR_USER_RELATIONSHIPS}
@@ -346,13 +319,6 @@ class Projects extends Component {
                   )
                  })
                 }
-      
-                <TeamTitle>Team</TeamTitle>
-                <TeamListContainer>
-                  {this.state.team.map((list, index) => (
-                    <TeamList key={index} src={list.photo} alt="" />
-                  ))}
-                </TeamListContainer>
 
                 <LogoutButton />
                 <Copyright>Copyright 2019-2020 by MultiTask</Copyright>
@@ -378,7 +344,6 @@ class Projects extends Component {
                       menuActive={this.menuActive}
                       showTasks={this.showTasks}
                       isTasksShow={this.state.showTasks}
-                      users={this.state.team}
                       key={v4()}
                       parentId={userId}
                       project={project}

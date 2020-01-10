@@ -60,21 +60,11 @@ const AddSteps = styled.img(({
 `);
 
 
-const Button = styled.button`
-  display: block;
-  margin: 0 auto;
-`;
-
 class Steps extends Component {
   state = {
     selectedStepId: null,
     showCreateSteps: false,
-    showGoals: false,
-    team: [{name:'user1', photo: '/images/users/user1.png'},
-      {name:'user2', photo: '/images/users/user2.png'},
-      {name:'user3', photo: '/images/users/user3.png'},
-      {name:'user4', photo: '/images/users/user4.png'},
-    ],
+    showGoals: false
   };
 
   wrapperRef = createRef();
@@ -132,7 +122,6 @@ class Steps extends Component {
             <Step
               key={v4()}
               step={step}
-              team={this.state.team}
               selected={step.id === selectedStepId}
               onUpdate={onUpdate}
               parentId={taskId}

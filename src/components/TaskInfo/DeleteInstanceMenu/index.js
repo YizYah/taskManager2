@@ -1,17 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.5s ease;
-  &:hover {
-    color: ${props => props.hoverColor || '#000000'};
-  }
-`;
-
 const Container = styled.div`
   margin: 1em;
   padding: 1em;
