@@ -262,11 +262,7 @@ class Projects extends Component {
     }
   }
   
-  handleSelect = id => this.setState({ selectedProjectId: id, menuActive: 'Tasks' });
-
-  menuActive = menu => {
-    this.setState({ menuActive: menu})
-  }
+  handleSelect = (id, selectedMenu) => this.setState({ selectedProjectId: id, menuActive: selectedMenu });
 
   showAdd = () => {
     this.setState({ showCreateProject: !this.state.showCreateProject })
@@ -341,7 +337,6 @@ class Projects extends Component {
                   {projects && projects.map(project => (
                     <Project
                       showCreateProject={this.state.showCreateProject}
-                      menuActive={this.menuActive}
                       showTasks={this.showTasks}
                       isTasksShow={this.state.showTasks}
                       key={v4()}

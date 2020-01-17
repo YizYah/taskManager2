@@ -86,21 +86,14 @@ class Tasks extends Component {
       node !== e.target && 
       !node.contains(e.target)
     ) {
-       this.changeStatus('Tasks', null)
-     // this.props.menuActive('Tasks');
-    }
+       this.props.onSelect(this.props.projectId, 'Tasks');
+    } 
   }
 
-  changeStatus = (menu, id) => {
-    //this.props.menuActive(menu);
-    this.setState({ selectedTaskId: id, 
-      showSteps: false  });
-  }
 
-  handleSelect = id => {
-    this.changeStatus('Steps', id);
-   // this.setState({ selectedTaskId: id });
-   // this.props.menuActive('Steps');
+  handleSelect = (id, selectedMenu) => {
+    this.setState({ selectedTaskId: id });
+  //  this.props.onSelect(this.props.projectId, selectedMenu);
   }
 
   showAdd = () => {

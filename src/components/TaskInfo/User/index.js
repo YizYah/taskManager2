@@ -18,7 +18,8 @@ const UserComponent = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  width: 105px;
+  padding-left: 24px;
+  width: 80px;
   height: 40px;
   background: #B4EAFB;
   border-radius: 20px;

@@ -151,10 +151,8 @@ function Project({
   refetchQueries,
   onSelect,
   showCreateProject,
-  users,
   showTasks,
-  isTasksShow,
-  menuActive
+  isTasksShow
 }) {
   const [projectValue, updateProjectValue] = useState(project.value);
   const [isEditMode, updateIsEditMode] = useState(false);
@@ -165,7 +163,7 @@ function Project({
   function handleProjectValueChange(e) {
     updateProjectValue(e.target.value);
   }
-
+  
   async function handleProjectValueSave() {
     updateIsSaving(true);
 
@@ -266,7 +264,7 @@ function Project({
         }}
       > 
       <ProjectContainer style={{ opacity: showCreateProject || isTasksShow ? '0.5' : '1' }}>
-        <ProjectStyleWrapper onClick={() => {onSelect(project.id); showTasks();}}>
+        <ProjectStyleWrapper onClick={() => {onSelect(project.id, 'Tasks'); showTasks();}}>
           <ProjectDetail>
             <div>
               <ProjectTitle>{projectValue}</ProjectTitle>
@@ -299,7 +297,7 @@ function Project({
           </div>
         </ProjectDetail>
         <TasksLength>Tasks (2/<TasksTotal>4</TasksTotal>)</TasksLength>
-      < Tasks menuActive={menuActive} projectId = {project.id} />
+      < Tasks projectId={project.id} onSelect={onSelect}/>
     </ProjectStyleWrapper>
   );
 }
